@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estates & Stangs | Luxury Listings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top-header solid">
+      <div class="shell nav-row">
+        <a class="logo" href="index.html">Estates &amp; Stangs</a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link active" href="listings.html">Listings</a>
+          <a class="nav-link" href="#about">About</a>
+          <a class="nav-link" href="#contact">Contact</a>
+          <a class="consult-btn dark" href="#contact">Book Consultation</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="about" class="philosophy-section">
+        <div class="showcase-image" aria-hidden="true"></div>
+        <div class="showcase-copy">
+          <p class="eyebrow">OUR PHILOSOPHY</p>
+          <h1>Luxury is in the Details</h1>
+          <p>
+            We specialize in connecting discerning clients with prestigious estates
+            and premium land plots. Whether you're looking for a completed home or
+            the perfect stand to build your dream, we deliver an unmatched portfolio.
+          </p>
+          <ul class="feature-points">
+            <li>Exclusive Market Access</li>
+            <li>Personalized Concierge Service</li>
+            <li>Architectural Consultation</li>
+          </ul>
+          <button id="storyBtn" class="story-btn" type="button">Read Our Story</button>
+          <p id="storyMessage" class="inline-note" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="shell listings-tools">
+        <div class="filter-grid">
+          <label>
+            Max Price <span id="maxPriceLabel" class="chip">$95,000</span>
+            <input id="maxPrice" type="range" min="20000" max="150000" step="5000" value="95000" />
+          </label>
+
+          <label>
+            Location
+            <select id="locationFilter">
+              <option value="all">All locations</option>
+              <option value="north">Northview</option>
+              <option value="east">Eastfield</option>
+              <option value="south">Southridge</option>
+            </select>
+          </label>
+
+          <label>
+            Property Type
+            <select id="typeFilter">
+              <option value="all">All types</option>
+              <option value="stand">Serviced Stand</option>
+              <option value="land">Prime Land</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="listingGrid" class="listing-grid"></div>
+      </section>
+
+      <section id="contact" class="shell contact-section">
+        <article class="contact-card">
+          <h2>Book a Consultation</h2>
+          <p>Choose your property and let our advisors prepare a tailored offer.</p>
+          <form id="visitForm">
+            <label for="name">Full Name</label>
+            <input id="name" type="text" required />
+
+            <label for="phone">Phone Number</label>
+            <input id="phone" type="tel" required />
+
+            <label for="visitDate">Preferred Site Visit Date</label>
+            <input id="visitDate" type="date" required />
+
+            <button class="consult-btn dark full" type="submit">Confirm Booking</button>
+          </form>
+          <p id="bookingMessage" class="inline-note" aria-live="polite"></p>
+        </article>
+
+        <article class="mortgage-card">
+          <h2>Mortgage Snapshot</h2>
+          <p>Estimate your monthly repayment in seconds.</p>
+          <label for="price">Property Price (USD)</label>
+          <input id="price" type="number" min="1000" value="80000" />
+
+          <label for="deposit">Deposit (USD)</label>
+          <input id="deposit" type="number" min="0" value="12000" />
+
+          <label for="rate">Interest Rate (%)</label>
+          <input id="rate" type="number" step="0.1" min="1" value="11.2" />
+
+          <label for="years">Term (Years)</label>
+          <input id="years" type="number" min="1" max="30" value="18" />
+
+          <button id="calcBtn" class="consult-btn dark full" type="button">Calculate Payment</button>
+          <p id="mortgageResult" class="inline-note" aria-live="polite"></p>
+        </article>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
