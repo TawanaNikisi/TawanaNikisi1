@@ -49,6 +49,57 @@ if (listingGrid) {
     typeFilter.value = prefType;
   }
 
+  const loadListings = async () => {
+    const maxPrice = Number(maxPriceInput.value);
+    const location = locationFilter.value;
+    const type = typeFilter.value;
+    const query = searchParams.get("q") || "";
+
+    maxPriceLabel.textContent = formatMoney(maxPrice);
+
+    const url = new URL("/api/listings", window.location.origin);
+    url.searchParams.set("maxPrice", String(maxPrice));
+    url.searchParams.set("location", location);
+    url.searchParams.set("type", type);
+    if (query) {
+      url.searchParams.set("q", query);
+    }
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Failed to load listings");
+    }
+
+    const data = await response.json();
+    return data.listings || [];
+  };
+
+  const renderListings = async () => {
+    try {
+      const listings = await loadListings();
+
+      if (!listings.length) {
+        listingGrid.innerHTML = '<article class="property-card"><h3>No exact matches found</h3><p>Try increasing your budget or selecting all property types.</p></article>';
+        return;
+      }
+
+      listingGrid.innerHTML = listings
+        .map(
+          (item) => `
+            <article class="property-card">
+              <span class="badge">${item.type === "stand" ? "Serviced Stand" : "Prime Land"}</span>
+              <h3>${item.title}</h3>
+              <p><strong>Location:</strong> ${item.location}</p>
+              <p><strong>Size:</strong> ${item.size}</p>
+              <p><strong>Price:</strong> ${formatMoney(item.price)}</p>
+              <button class="consult-btn dark full" data-id="${item.id}" type="button">Reserve Interest</button>
+            </article>
+          `
+        )
+        .join("");
+    } catch (error) {
+      listingGrid.innerHTML = '<article class="property-card"><h3>Unable to load listings</h3><p>Please refresh the page or try again shortly.</p></article>';
+    }
   const normalize = (value) => value.toLowerCase().replaceAll(" ", "");
 
   const renderListings = () => {
@@ -122,6 +173,31 @@ if (storyBtn) {
 
 const visitForm = document.querySelector("#visitForm");
 if (visitForm) {
+  visitForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const name = document.querySelector("#name").value.trim();
+    const phone = document.querySelector("#phone").value.trim();
+    const visitDate = document.querySelector("#visitDate").value;
+    const resultNode = document.querySelector("#bookingMessage");
+
+    try {
+      const response = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, visitDate })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        resultNode.textContent = data.error || "Could not complete booking.";
+        return;
+      }
+
+      resultNode.textContent = `${data.message} Ref: ${data.reference}`;
+      visitForm.reset();
+    } catch (error) {
+      resultNode.textContent = "Network error. Please try again.";
+    }
   visitForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const name = document.querySelector("#name").value.trim();
@@ -134,6 +210,29 @@ if (visitForm) {
 
 const calcBtn = document.querySelector("#calcBtn");
 if (calcBtn) {
+  calcBtn.addEventListener("click", async () => {
+    const price = Number(document.querySelector("#price").value);
+    const deposit = Number(document.querySelector("#deposit").value);
+    const rate = Number(document.querySelector("#rate").value);
+    const years = Number(document.querySelector("#years").value);
+
+    try {
+      const response = await fetch("/api/mortgage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ price, deposit, rate, years })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        document.querySelector("#mortgageResult").textContent = data.error || "Please provide valid mortgage values.";
+        return;
+      }
+
+      document.querySelector("#mortgageResult").textContent = `Estimated repayment: ${formatMoney(data.monthlyPayment)} per month.`;
+    } catch (error) {
+      document.querySelector("#mortgageResult").textContent = "Network error. Please try again.";
+    }
   calcBtn.addEventListener("click", () => {
     const price = Number(document.querySelector("#price").value);
     const deposit = Number(document.querySelector("#deposit").value);
