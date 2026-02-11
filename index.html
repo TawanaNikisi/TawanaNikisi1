@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estates & Stangs | Find Your Place</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="home-page">
+    <header class="top-header transparent">
+      <div class="shell nav-row">
+        <a class="logo" href="index.html">Estates &amp; Stangs</a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="index.html">Home</a>
+          <a class="nav-link" href="listings.html">Listings</a>
+          <a class="nav-link" href="listings.html#about">About</a>
+          <a class="nav-link" href="listings.html#contact">Contact</a>
+          <a class="consult-btn" href="listings.html#contact">Book Consultation</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-banner">
+        <div class="hero-overlay"></div>
+        <div class="shell hero-content">
+          <h1>Find Your Place<br />In The World</h1>
+          <p>
+            Exclusive estates and prime land plots for those who seek the
+            extraordinary.
+          </p>
+
+          <form id="heroSearchForm" class="search-panel" autocomplete="off">
+            <label class="search-field search-location">
+              <span class="sr-only">Location, Zip, or Neighborhood</span>
+              <input
+                id="heroLocation"
+                name="location"
+                type="text"
+                placeholder="Location, Zip, or Neighborhood"
+              />
+            </label>
+
+            <label class="search-field search-type">
+              <span class="sr-only">Property Type</span>
+              <select id="heroType" name="type">
+                <option value="all">Property Type</option>
+                <option value="stand">Serviced Stand</option>
+                <option value="land">Prime Land</option>
+              </select>
+            </label>
+
+            <button class="search-action" type="submit">Search</button>
+          </form>
+          <p id="heroSearchResult" class="hero-result" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
